@@ -1,5 +1,6 @@
 package io.github.cursodsousa.libraryapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +39,7 @@ public class Author {
     private String nationality;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Book> books;
 
     @CreatedDate

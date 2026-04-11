@@ -1,5 +1,6 @@
 package io.github.cursodsousa.libraryapi.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.cursodsousa.libraryapi.model.BookGenre;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,10 +17,11 @@ public record BookCreateDTO(
         String isbn,
         @NotBlank(message = "campo obrigatório")
         String title,
-        @NotNull(message = "campo obrigatório")
-        @Past(message = "não pode ser uma data futura")
-        LocalDate publication_date,
-        BookGenre bookGenre,
+        @NotNull
+        @Past
+        @JsonProperty("publication_date")
+        LocalDate publicationDate,
+        BookGenre genre,
         BigDecimal price,
         @NotNull(message = "campo obrigatório")
         UUID idAuthor
