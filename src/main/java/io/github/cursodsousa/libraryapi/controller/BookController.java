@@ -1,6 +1,7 @@
 package io.github.cursodsousa.libraryapi.controller;
 
 import io.github.cursodsousa.libraryapi.controller.dto.BookCreateDTO;
+import io.github.cursodsousa.libraryapi.controller.dto.BookResponseDTO;
 import io.github.cursodsousa.libraryapi.controller.dto.ErrorResponse;
 import io.github.cursodsousa.libraryapi.controller.mappers.BookMapper;
 import io.github.cursodsousa.libraryapi.exceptions.DuplicateRecordException;
@@ -10,12 +11,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/books")
@@ -32,6 +31,15 @@ public class BookController implements GenericController {
         URI location = generateHeaderLocation(book.getId());
 
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookResponseDTO> getBookDetails(@PathVariable UUID id){
+        return bookService.findById(id)
+                .map(book -> {
+                    var dto = bookMapper.toDTO(book);
+                    return ResponseEntity.ok(dto);
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }
