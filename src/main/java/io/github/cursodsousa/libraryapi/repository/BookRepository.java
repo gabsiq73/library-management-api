@@ -4,6 +4,7 @@ import io.github.cursodsousa.libraryapi.model.Author;
 import io.github.cursodsousa.libraryapi.model.BookGenre;
 import io.github.cursodsousa.libraryapi.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +20,7 @@ import java.util.UUID;
 * @see BookRepositoryTest
 * */
 
-public interface BookRepository extends JpaRepository<Book, UUID> {
+public interface BookRepository extends JpaRepository<Book, UUID>, JpaSpecificationExecutor<Book> {
 
 
     // Query Methods
